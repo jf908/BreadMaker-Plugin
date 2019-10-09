@@ -13,6 +13,7 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -28,7 +29,11 @@ public class MagicMirror extends AutoListener {
 
   @EventHandler
   public void onPlayerInteract(PlayerInteractEvent event) {
-    if(event.getItem() != null
+    if(
+      (event.getAction().equals(Action.RIGHT_CLICK_AIR)
+        || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
+      )
+      && event.getItem() != null
       && event.getItem().getType().equals(Material.WATCH)
       && !teleporting.contains(event.getPlayer().getUniqueId())) {
 
@@ -50,7 +55,7 @@ public class MagicMirror extends AutoListener {
           if(!player.getWorld().equals(world)) return;
           player.teleport(loc);
           world.playSound(loc, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1f, 1.8f);
-          world.spawnParticle(Particle.SPELL_MOB, loc, 32, 0, 1, 0);
+          world.spawnParticle(Particle.SPELL_MOB, loc, 64, 0, 1, 0);
 
           teleporting.remove(player.getUniqueId());
         }
