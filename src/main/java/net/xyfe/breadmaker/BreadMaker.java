@@ -7,6 +7,7 @@ public class BreadMaker extends JavaPlugin {
   @Override
   public void onEnable() {
     new MagicMirror(this);
+    new DeathMessage(this); 
   }
 
   @Override
