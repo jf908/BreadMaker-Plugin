@@ -51,13 +51,12 @@ public class MagicMirror extends AutoListener {
       new BukkitRunnable() {
         @Override
         public void run() {
+          teleporting.remove(player.getUniqueId());
           if(player.isDead()) return;
           if(!player.getWorld().equals(world)) return;
           player.teleport(loc);
           world.playSound(loc, Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1f, 1.8f);
           world.spawnParticle(Particle.SPELL_MOB, loc, 64, 0, 1, 0);
-
-          teleporting.remove(player.getUniqueId());
         }
       }.runTaskLater(plugin, 20);
     }
